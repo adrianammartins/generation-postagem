@@ -1,4 +1,4 @@
-FROM gradle:jdk20-jammy AS build
+FROM gradle:8.4.0-jdk20-jammy AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle build --no-daemon
