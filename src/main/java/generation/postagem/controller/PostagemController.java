@@ -1,7 +1,7 @@
 package generation.postagem.controller;
 
-import generation.postagem.domain.model.Tema;
-import generation.postagem.service.impl.TemaService;
+import generation.postagem.domain.model.Postagem;
+import generation.postagem.service.impl.PostagemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -10,28 +10,28 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/tema")
-public class TemaController {
-    private final TemaService temaService;
+@RequestMapping("/v1/postagem")
+public class PostagemController {
+    private final PostagemService postagemService;
 
-    public TemaController(TemaService temaService) {
-        this.temaService = temaService;
+    public PostagemController(PostagemService postagemService) {
+        this.postagemService = postagemService;
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<Tema>> findAll() {
-        return ResponseEntity.ok(temaService.findAll());
+    public ResponseEntity<List<Postagem>> findAll() {
+        return ResponseEntity.ok(postagemService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tema> findById(@PathVariable Long id) {
-        var obj = temaService.findById(id);
+    public ResponseEntity<Postagem> findById(@PathVariable Long id) {
+        var obj = postagemService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @PostMapping
-    public ResponseEntity<Tema> create(@RequestBody Tema request) {
-        var obj = temaService.create(request);
+    public ResponseEntity<Postagem> create(@RequestBody Postagem request) {
+        var obj = postagemService.create(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(obj.getId())
@@ -40,15 +40,15 @@ public class TemaController {
     }
 
     @PutMapping
-    public ResponseEntity<Tema> update(@RequestBody Tema request) {
-        return ResponseEntity.ok(temaService.update(request));
+    public ResponseEntity<Postagem> update(@RequestBody Postagem request) {
+        return ResponseEntity.ok(postagemService.update(request));
     }
 
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
 
-        boolean deletou = temaService.delete(id);
+        boolean deletou = postagemService.delete(id);
         if (deletou){
             return ResponseEntity.noContent().build();
         }

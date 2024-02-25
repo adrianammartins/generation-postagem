@@ -1,41 +1,43 @@
 package generation.postagem.service.impl;
 
-import generation.postagem.domain.model.Tema;
-import generation.postagem.domain.repository.TemaRepository;
+import generation.postagem.domain.model.Postagem;
+import generation.postagem.domain.repository.PostagemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class TemaService {
-    private final TemaRepository temaRepository;
+public class PostagemService {
+    private final PostagemRepository postagemRepository;
 
-    public TemaService(TemaRepository temaRepository) {
-        this.temaRepository = temaRepository;
+    public PostagemService(PostagemRepository postagemRepository) {
+        this.postagemRepository = postagemRepository;
     }
 
-    public List<Tema> findAll() {
-        return temaRepository.findAll();
+    public List<Postagem> findAll() {
+        return postagemRepository.findAll();
     }
 
-    public Tema findById(Long id) {
-        return temaRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public Postagem findById(Long id) {
+        return postagemRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
-    public Tema create(Tema create) {
-        return temaRepository.save(create);
+    public Postagem create(Postagem create) {
+        create.setDataInclusao(new Date());
+        return postagemRepository.save(create);
     }
 
-    public Tema update(Tema obj) {
-        return temaRepository.save(obj);
+    public Postagem update(Postagem obj) {
+        return postagemRepository.save(obj);
     }
 
     public boolean delete(Long idRequest) {
-        Optional<Tema> usuarioBanco = temaRepository.findById(idRequest);
-        if (usuarioBanco.isPresent()){
-            temaRepository.delete(usuarioBanco.get());
+        Optional<Postagem> postagemBanco = postagemRepository.findById(idRequest);
+        if (postagemBanco.isPresent()){
+            postagemRepository.delete(postagemBanco.get());
             return true;
         }
         return false;

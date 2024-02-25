@@ -1,0 +1,1 @@
+web: java -jar build/libs/generation-escola-prova-0.0.1-SNAPSHOT.jar
