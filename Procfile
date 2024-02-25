@@ -1,1 +1,1 @@
-web: java -jar build/libs/generation-escola-prova-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/generation-postagem-0.0.1-SNAPSHOT.jar
