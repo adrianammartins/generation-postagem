@@ -1,9 +1,8 @@
 FROM gradle:8.6.0-jdk21 as build
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-ADD . /usr/src/app
-RUN mvn package
+COPY . .
+RUN mvn clean package -DskipTests
 
-
-COPY --from=build /usr/src/app/target/generation-postagem.jar app.jar
-CMD["java", "jar", "app.jar"]
+FROM openjdk-7u121-jdk-alpine
+COPY --from=build target/generation-postagem-0.0.1-SNAPSHOT.jar generation-postagem-0.0.1-SNAPSHOT.jar.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "generation-postagem-0.0.1-SNAPSHOT.jar"]
