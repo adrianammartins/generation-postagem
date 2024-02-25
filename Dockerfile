@@ -1,8 +1,15 @@
-FROM gradle:8.6.0-jdk21 as build
-COPY . .
+#
+# Build stage
+#
+FROM gradle:jdk17-jammy AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
 RUN gradle build --no-daemon
 
-FROM gradle:jdk21-jammy
-COPY --from=build target/generation-postagem-0.0.1-SNAPSHOT.jar generation-postagem-0.0.1-SNAPSHOT.jar.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "generation-postagem-0.0.1-SNAPSHOT.jar"]
+#LABEL org.name="hezf"
+#
+# Package stage
+#
+FROM eclipse-temurin:17-jdk-jammy
+COPY --from=build /home/gradle/src/build/libs/docker-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
